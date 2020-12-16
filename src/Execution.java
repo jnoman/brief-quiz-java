@@ -1,9 +1,13 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 
 import javax.swing.*;
 
@@ -16,9 +20,11 @@ public class Execution implements InterListe {
 	static ArrayList<Player_QUIZ> listePlayer_QUIZ;
 	*/
 	static ArrayList<ButtonGroup> listeButtonGroup;
-	static Player player1;
+	static Players player1;
 	static Timer t; 
 	static JLabel lapelTime;
+	String chemin;
+	static Player player;
 
 	public static void main(String[] args) {
 	 
@@ -33,12 +39,61 @@ public class Execution implements InterListe {
 		panel = new JLayeredPane();
 		frame.getContentPane().add(panel);
 		login();
+		
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		lapelTime= new JLabel();
+		
+		playeMusic("quiz-show.mp3",player);
+		
+		
+	}
+	public static void StopMusic(String chemin,Player player)
+	{
+		
+		try 
+		{
+			FileInputStream fileInputStrem = new FileInputStream(chemin);
+			player = new Player(fileInputStrem);
+			player.close();
+			 
+			System.out.println("OFF !");
+			
+		}
+		catch(FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch(JavaLayerException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
+	public static void playeMusic(String chemin,Player player)
+	{
+		
+		try 
+		{
+			FileInputStream fileInputStrem = new FileInputStream(chemin);
+			player = new Player(fileInputStrem);
+			player.play();
+			System.out.println("On !");
+			
+		}
+		catch(FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch(JavaLayerException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	
 	public static void login() {
+		
 		
 		JLabel label_nom = new JLabel("nom");
 		label_nom.setBounds(30, 30, 60, 20);
@@ -71,7 +126,8 @@ public class Execution implements InterListe {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				player1 = new Player(txt_nom.getText(), txt_prenom.getText(), Integer.parseInt(txt_age.getText()));
+				 
+				player1 = new Players(txt_nom.getText(), txt_prenom.getText(), Integer.parseInt(txt_age.getText()));
 				//viderPanelNiveau();
 				t = new Timer(1000, new ActionListener() {
 					
@@ -96,6 +152,7 @@ public class Execution implements InterListe {
 		            }
 		        }, 0);
 				niveau1();
+				
 				
 			}
 		});
@@ -218,7 +275,10 @@ public class Execution implements InterListe {
 						System.out.println(nbrReponseCorrect(3,listeQuiz,listePlayer_QUIZ));
 						t.stop();
 						JOptionPane.showMessageDialog(null, "YOU WIN !!");
+						StopMusic("quiz-show.mp3",player);
+						playeMusic("win.mp3",player);
 	                    System.exit(0);
+	                    StopMusic("win.mp3",player);
 						
 					}
 					else {
