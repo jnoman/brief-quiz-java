@@ -294,6 +294,25 @@ public class Execution implements InterListe {
 		
 	}
 	
+	public static String NiveauActuel(ArrayList<Quiz> q)
+	{
+		String ret ="";
+		if(q.size()==5)
+		{
+			ret= "Niveau 1";
+		}
+		else if (q.size()==10)
+		{
+			ret= "Niveau 2";
+		}
+		else if(q.size()==15)
+		{
+			ret= "Niveau 3";
+		}
+		return ret;
+		
+	}
+	
 	public static int nbrReponseCorrect(int niveau ,ArrayList<Quiz> q1,ArrayList<Player_QUIZ> pq)
 	{
 		int start , end;
