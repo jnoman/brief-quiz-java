@@ -10,8 +10,10 @@ public class Execution implements InterListe {
 	
 	static JFrame frame;
 	static JLayeredPane panel;
+	/*
 	static ArrayList<Quiz> listeQuiz;
 	static ArrayList<Player_QUIZ> listePlayer_QUIZ;
+	*/
 	static ArrayList<ButtonGroup> listeButtonGroup;
 	static Player player1;
 	static Timer t; 
@@ -19,9 +21,11 @@ public class Execution implements InterListe {
 
 	public static void main(String[] args) {
 	 
-		listeQuiz = new ArrayList<Quiz>();
+ 
 		listeButtonGroup = new ArrayList<ButtonGroup>();
-		listePlayer_QUIZ = new ArrayList<Player_QUIZ>();
+		ArrayList<Quiz> listeQuiz = new ArrayList<Quiz>();
+		  ArrayList<Player_QUIZ> listePlayer_QUIZ = new ArrayList<Player_QUIZ>();
+	 
 		
 		frame = new JFrame("Quiz");
 		frame.setBounds(100, 100, 700, 500);
@@ -120,9 +124,14 @@ public class Execution implements InterListe {
 			public void actionPerformed(ActionEvent e) {
 				if(checkReponseAllQuestion()) {
 					if(calculeScore() >= 40) {
+						/*
 						viderLesCollection();
 						viderPanelNiveau();
+						*/
+						//affichage du resultat
+						System.out.println(nbrReponseCorrect(1,listeQuiz,listePlayer_QUIZ));
 						niveau2();
+						
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "YOU LOSE !!");
@@ -138,10 +147,113 @@ public class Execution implements InterListe {
 	
 	public static void niveau2() {
 		
+		Quiz quiz1 = new Quiz("Après la compilation, un programme écrit en JAVA, il se transforme en programme en bytecode\r\n"
+				+ "Quelle est l’extension du programme en bytecode ?", ".Class", "aucun\r\n"
+						+ "des choix", ".JAVA", ".Class");
+		Quiz quiz2 = new Quiz("Class Test{\r\n"
+				+ "Public Test () {\r\n"
+				+ "System.out.println(”Bonjour”);}\r\n"
+				+ "public Test (int i) {\r\n"
+				+ "this();\r\n"
+				+ "System.out.println(”Nous sommes en ”+i+ ” !”);}; }\r\n"
+				+ "qu’affichera l’instruction suivante?\r\n"
+				+ "Test t1=new Test (2018);", "aucun\r\n"
+						+ "des choix", "aucun\r\n"
+								+ "des choix", "Bonjour\r\n"
+										+ "Nous sommes en 2018 !", "Nous sommes en 2018 !");
+		Quiz quiz3 = new Quiz("Voici un constructeur de la classe Employee, y-a-t'il un problème ?\r\n"
+				+ "Public void Employe(String n){\r\n"
+				+ "Nom=n;}", "faux", "vrai", "faux");
+		Quiz quiz4 = new Quiz("Pour spécifier que la variable ne pourra plus être modifiée et doit être initialisée dès sa déclaration, on la déclare comme une constante avec le mot réservé", "final", "aucun\r\n"
+				+ "des choix", "final","const");
+		Quiz quiz5 = new Quiz("Dans une classe, on accède à ses variables grâce au mot clé", "this", "aucun\r\n"
+				+ "des choix", "this", "super");
+		
+		listeQuiz.add(quiz1);
+		listeQuiz.add(quiz2);
+		listeQuiz.add(quiz3);
+		listeQuiz.add(quiz4);
+		listeQuiz.add(quiz5);
+		
+		remplirePanelNiveau();
+		
+		JButton btn_valider = new JButton("valider");
+		btn_valider.setBounds(500, 400, 100, 30);
+		panel.add(btn_valider);
+		btn_valider.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(checkReponseAllQuestion()) {
+					if(calculeScore() >= 60) {
+						/*
+						viderLesCollection();
+						
+						*/
+						viderPanelNiveau();
+						//affichage du resultat
+						System.out.println(nbrReponseCorrect(2,listeQuiz,listePlayer_QUIZ));
+						niveau3();
+						
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "YOU LOSE !!");
+	                    System.exit(0);
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Merci de répondre à toutes les questions");
+				}
+			}
+		});
+		 
+		
 	}
 	
 	public static void niveau3() {
 		
+	}
+	
+	public static int nbrReponseCorrect(int niveau ,ArrayList<Quiz> q1,ArrayList<Player_QUIZ> pq)
+	{
+		  int start , end;
+		if(niveau == 1)
+		{
+			start=0;
+			end  =5;
+ 
+		}
+		else if(niveau == 2)
+		{
+			start=5;
+			end  =10;
+		}
+		else
+		{
+			start=10;
+			end  =15;
+		}
+		 int totalReponseCorrectParNiveau =0;
+ 
+		  
+		  
+		 for(int i = start; i<end; i++) {
+ 			 
+			 if(q1.get(i).getId_quiz() == pq.get(i).getId_quiz())
+			 {
+				 if(q1.get(i).getReponse().equals(pq.get(i).getReponseChosen()))
+				 {
+					 totalReponseCorrectParNiveau++;
+				 
+					 
+				 }
+				  
+			 }
+			 
+			}
+		 
+		 
+		 return totalReponseCorrectParNiveau;
 	}
 	
 	public static void remplirePanelNiveau() {
