@@ -15,10 +15,6 @@ public class Execution implements InterListe {
 	
 	static JFrame frame;
 	static JLayeredPane panel;
-	/*
-	static ArrayList<Quiz> listeQuiz;
-	static ArrayList<Player_QUIZ> listePlayer_QUIZ;
-	*/
 	static ArrayList<ButtonGroup> listeButtonGroup;
 	static Players player1;
 	static Timer t; 
@@ -44,40 +40,28 @@ public class Execution implements InterListe {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		lapelTime= new JLabel();
 		
-		playeMusic("quiz-show.mp3",player);
+		playeMusic("quiz-show.mp3",30000);
 		
 		
 	}
-	public static void StopMusic(String chemin,Player player)
+	public static void StopMusic()  throws JavaLayerException
 	{
-		
-		try 
-		{
-			FileInputStream fileInputStrem = new FileInputStream(chemin);
-			player = new Player(fileInputStrem);
-			player.close();
-			 
-			System.out.println("OFF !");
-			
-		}
-		catch(FileNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		catch(JavaLayerException e)
-		{
-			e.printStackTrace();
-		}
+		if (player!=null)
+		  {
+		    player.close();
+		    player = null;
+		    
+		  }
 	}
 	
-	public static void playeMusic(String chemin,Player player)
+	public static void playeMusic(String chemin,int frames)
 	{
 		
 		try 
 		{
 			FileInputStream fileInputStrem = new FileInputStream(chemin);
 			player = new Player(fileInputStrem);
-			player.play();
+			player.play(frames);
 			System.out.println("On !");
 			
 		}
@@ -89,7 +73,9 @@ public class Execution implements InterListe {
 		{
 			e.printStackTrace();
 		}
+		 
 	}
+	
 	
 	
 	public static void login() {
@@ -275,10 +261,20 @@ public class Execution implements InterListe {
 						System.out.println(nbrReponseCorrect(3,listeQuiz,listePlayer_QUIZ));
 						t.stop();
 						JOptionPane.showMessageDialog(null, "YOU WIN !!");
-						StopMusic("quiz-show.mp3",player);
-						playeMusic("win.mp3",player);
+						try {
+							StopMusic();
+						} catch (JavaLayerException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						playeMusic("win.mp3",300);
 	                    System.exit(0);
-	                    StopMusic("win.mp3",player);
+	                    try {
+							StopMusic();
+						} catch (JavaLayerException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						
 					}
 					else {
