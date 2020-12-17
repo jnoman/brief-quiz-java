@@ -35,12 +35,13 @@ public class Execution implements InterListe {
 		panel = new JLayeredPane();
 		frame.getContentPane().add(panel);
 		login();
+	 
 		
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		lapelTime= new JLabel();
 		
-		playeMusic("quiz-show.mp3",30000);
+		playerMusic("quiz-show.mp3",30000);
 		
 		
 	}
@@ -54,7 +55,7 @@ public class Execution implements InterListe {
 		  }
 	}
 	
-	public static void playeMusic(String chemin,int frames)
+	public static void playerMusic(String chemin,int frames)
 	{
 		
 		try 
@@ -122,6 +123,7 @@ public class Execution implements InterListe {
 						if(player1.getDuration() > 0) {
 							player1.setDuration(player1.getDuration()-1);
 							lapelTime.setText(LocalTime.MIN.plusSeconds(player1.getDuration()).toString());
+							frame.setTitle(NiveauActuel(listeQuiz));
 						}
 						else {
 							t.stop();
@@ -175,7 +177,17 @@ public class Execution implements InterListe {
 						
 					}
 					else {
-						JOptionPane.showMessageDialog(null, "YOU LOSE !!");
+						 try {
+								StopMusic();
+							} catch (JavaLayerException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						playerMusic("lose.mp3",200);
+						 String invisibleChar= "\u200e";
+							final ImageIcon icon = new ImageIcon("lose.gif");
+	                        JOptionPane.showMessageDialog(null,invisibleChar, "YOU LOST HAHAHAH", JOptionPane.INFORMATION_MESSAGE, icon);
+						
 	                    System.exit(0);
 					}
 				}
@@ -221,7 +233,17 @@ public class Execution implements InterListe {
 						
 					}
 					else {
-						JOptionPane.showMessageDialog(null, "YOU LOSE !!");
+						 try {
+								StopMusic();
+							} catch (JavaLayerException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						playerMusic("lose.mp3",200);
+						 String invisibleChar= "\u200e";
+							final ImageIcon icon = new ImageIcon("lose.gif");
+	                        JOptionPane.showMessageDialog(null,invisibleChar, "YOU LOST HAHAHAH ", JOptionPane.INFORMATION_MESSAGE, icon);
+						
 	                    System.exit(0);
 					}
 				}
@@ -260,25 +282,38 @@ public class Execution implements InterListe {
 						//affichage du resultat
 						System.out.println(nbrReponseCorrect(3,listeQuiz,listePlayer_QUIZ));
 						t.stop();
-						JOptionPane.showMessageDialog(null, "YOU WIN !!");
 						try {
 							StopMusic();
 						} catch (JavaLayerException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						playeMusic("win.mp3",300);
-	                    System.exit(0);
-	                    try {
-							StopMusic();
-						} catch (JavaLayerException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+						playerMusic("win.mp3",300);
+	                  
+	                   String invisibleChar= "\u200e";
+						final ImageIcon icon = new ImageIcon("source.gif");
+                        JOptionPane.showMessageDialog(null,invisibleChar, "YOU WON ! ", JOptionPane.INFORMATION_MESSAGE, icon);
+						 try {
+								StopMusic();
+							} catch (JavaLayerException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						  System.exit(0);
 						
 					}
 					else {
-						JOptionPane.showMessageDialog(null, "YOU LOSE !!");
+						 try {
+								StopMusic();
+							} catch (JavaLayerException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						playerMusic("lose.mp3",200);
+						 String invisibleChar= "\u200e";
+							final ImageIcon icon = new ImageIcon("lose.gif");
+	                        JOptionPane.showMessageDialog(null,invisibleChar, "YOU LOST HAHAHAH ", JOptionPane.INFORMATION_MESSAGE, icon);
+						
 	                    System.exit(0);
 					}
 				}
@@ -292,7 +327,7 @@ public class Execution implements InterListe {
 	
 	public static String NiveauActuel(ArrayList<Quiz> q)
 	{
-		String ret ="";
+		String ret ="QUIZ";
 		if(q.size()==5)
 		{
 			ret= "Niveau 1";

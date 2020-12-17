@@ -1,7 +1,7 @@
 
 public class Players {
 	
-	private int id_Player;
+       private int id_Player;
 	   
 	   private String nom;
 	    

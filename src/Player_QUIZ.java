@@ -13,62 +13,7 @@ public class Player_QUIZ implements InterListe{
 		   setReponseChosen(RC);
 		   setGoodchoice(choice);
 	   }
-	    
-	   
-	    
-	   /*
-	    
-	   public static double calculScore()
-	   {
-		   boolean trouve=false;
-		   double totalReponseCorrectParNiveau =0;
-		   //a changer
-		   if(cpt==1)
-		   {
-			   int j=0;
-			  
-
-				for(Quiz L : listeQuiz  ){
-					 totalReponseCorrectParNiveau =2;
-					while(!trouve)
-					{
-						if(L.getId_quiz() == listePlayer_QUIZ.get(j).getId_quiz())
-						{
-							if(L.getReponse().equals(listePlayer_QUIZ.get(j).getReponseChosen()))
-							{
-								totalReponseCorrectParNiveau++;
-								trouve=true;
-								break;
-							}
-						}
-						else
-						{
-							j++;
-						}
-					 
-					  }
-					}
-				cpt=0;
-				
-				return totalReponseCorrectParNiveau;
-			   
-		   }
-		   return -1;
-		   
-	   }
-	   */
-	   
-	   // good loop
-	   /*
-	   List<Dept> d = new ArrayList<Dept>();
-	   List<Emp> e = new ArrayLlist<Emp>();
-	   public void loop()
-		   { int min = Math.min(d.size(), e.size());
-		   for(int i = 0; i<min; i++) {
-			   System.out.println("---"+e.get(i)+"---"+d.get(i));
-			}
-	   }
-	   */
+	     
 
 	public int getId_Player() {
 		return id_Player;
